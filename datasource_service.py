@@ -24,3 +24,18 @@ with connection:
     #     cursor.execute(sql, ('webmaster@python.org',))
     #     result = cursor.fetchone()
     #     print(result)
+
+
+
+    # SELECT
+
+
+    def registerUser( email,firstname ,lastname ,password ):
+        with connection:
+            with connection.cursor() as cursor:
+                sql = "INSERT INTO `holamundo`.`user` (`email`,`firstname` `lastname`,`password`) VALUES (%s,%s,%s,%s)"
+                cursor.execute(sql, (email, firstname, lastname, password))
+            connection.commit()
+
+    # CREATE
+
