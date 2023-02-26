@@ -1,7 +1,7 @@
 from flask import render_template, request, url_for, redirect,Flask
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, SubmitField
-from datasource_service import registerUser,getUser
+from datasource_service import editPie, registerUser,getUser,registerPypie,getAllUserPie,getPieById
 from wtforms.validators import InputRequired,Length, ValidationError
 import sys
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -39,6 +39,12 @@ class PypieForm(FlaskForm):
     filling = StringField(validators=[InputRequired(),Length(min=3, max=20)])
     crust = StringField(validators=[InputRequired(),Length(min=3, max=20)])
     submit = SubmitField('Add Pie')
+
+class EditPieForm(FlaskForm):
+    name = StringField(validators=[InputRequired(),Length(min=3, max=20)])
+    filling = StringField(validators=[InputRequired(),Length(min=3, max=20)])
+    crust = StringField(validators=[InputRequired(),Length(min=3, max=20)])
+    submit = SubmitField('Edit Pie')
 
 
 
@@ -81,5 +87,45 @@ def registerLogin():
 @app.route('/dashboard', methods=['GET','POST']) 
 @login_required
 def dashboard():
-    form=PypieForm()
-    return render_template('dashboard.html',form=form)
+    formPie=PypieForm()
+    name=current_user.firstname
+    user_id= current_user.id
+    all_user_pie= getAllUserPie(user_id)
+    url='https://localhost:5000/edit/'
+    
+    if formPie.validate_on_submit and request.method == 'POST':
+        registerPypie(formPie.name.data,formPie.filling.data,formPie.crust.data,user_id,0)
+        print('pude registrar el pie')
+        return redirect(url_for('dashboard'))
+    return render_template('dashboard.html',form=formPie,name=name,all_user_pie=all_user_pie,url=url)
+
+
+@app.route('/pies', methods=['GET','POST']) 
+@login_required
+def pie():
+    
+    name=current_user.firstname
+    user_id= current_user.id
+    all_user_pie= getAllUserPie(user_id)
+    url='https://localhost:5000/edit/'
+    return render_template('pies.html',name=name,all_user_pie=all_user_pie,url=url)
+
+@app.route('/edit/<int:pie_id>', methods=['GET','POST']) 
+@login_required
+def editPiePage(pie_id):
+    formEditPie= EditPieForm()
+    name=current_user.firstname
+    if request == 'POST':
+        editPie(pie_id,formEditPie.name.data,formEditPie.filling.data,formEditPie.crust.data)
+    url='https://localhost:5000/edit/'
+    return render_template('edit_pie.html',form=formEditPie,name=name,url=url)
+
+
+@app.route('/show/<int:pie_id>', methods=['GET','POST']) 
+@login_required
+def showPie(pie_id):
+    formEditPie= EditPieForm()
+    name=current_user.firstname
+    current_pie = getPieById(pie_id)
+    url='https://localhost:5000/edit/'
+    return render_template('show_pie.html',form=formEditPie,name=name,url=url,current_pie=current_pie)

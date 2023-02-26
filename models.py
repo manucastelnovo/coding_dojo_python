@@ -15,6 +15,5 @@ class User(UserMixin):
     @staticmethod
     def get(user_id):
         user_data=getUserById(user_id)
-        
         user = User(id=user_data['id'], firstname=user_data['firstname'], lastname=user_data['lastname'], email=user_data['email'],password=user_data['password'])
         return user

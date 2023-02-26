@@ -30,45 +30,15 @@
             {% for item in all_user_pie %}
               <tr>
                 <td>{{ item['name'] }}</td>
+                
                 <td>
-                  <a href="">{{item['id']}}</a>
+                  <a href="https://localhost:5000/edit/{{item['id']}}">{{item['id']}}</a>
                 </td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
         </div>
-       
-
-        <form action="" method="POST">
-          <div class="flex flex-col">
-
-            <div class="mb-8">
-              Add new Pypie
-            </div>
-            
-            <h2>name</h2>
-            <div class="border border-solid mb-8">
-              {{ form.hidden_tag() }}  {{ form.name() }} 
-            </div>
-            <h2>filling</h2>
-            <div class="border border-solid mb-8">
-              {{ form.filling() }}
-            </div>
-            <h2>Crust</h2>
-            <div class="border border-solid mb-8">
-              {{ form.crust() }}
-            </div>
-
-            <div class="border border-black text-center">
-              {{form.submit() }}
-
-            </div>
-            
-          </div>
-          
-
-        </form>
       </section>
       </div>
       

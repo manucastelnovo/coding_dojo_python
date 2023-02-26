@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="p-[100px]">
+
+
+    <div>
+      <div>
+
+        <section class="flex flex-row justify-between">
+        
+        <div>
+         <h1> Edit Pie Latters </h1>
+         <form action="" method="POST">
+            <div class="flex flex-col">
+  
+              <div class="mb-8">
+                
+              </div>
+              
+              <h2>name</h2>
+              <div class="border border-solid mb-8">
+                {{ form.hidden_tag() }}  {{ form.name() }} 
+              </div>
+              <h2>filling</h2>
+              <div class="border border-solid mb-8">
+                {{ form.filling() }}
+              </div>
+              <h2>Crust</h2>
+              <div class="border border-solid mb-8">
+                {{ form.crust() }}
+              </div>
+  
+              <div class="border border-black text-center">
+                {{form.submit() }}
+  
+              </div>
+              
+            </div>
+            
+  
+          </form>
+        </div>
+       
+
+       <div>
+
+       </div>
+      </section>
+      </div>
+      
+
+    </div>
+    
+    
+
+  </body>
+</html>

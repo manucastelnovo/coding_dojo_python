@@ -70,10 +70,44 @@ def getUserById( id:int ):
         
 
 
-# def registerPypie( name:str,filling:str ,crust:str, user_id:str,votes:str ):
-#     
-#         with connection.cursor() as cursor:
-#             sql = "INSERT INTO `users`(`name`,`filling`,`crust`,`votes`) VALUES (%s,%s,%s,%s)"
-#             cursor.execute(sql, (name, filling, crust, votes))
-#             connection.commit()
+def registerPypie( name:str,filling:str ,crust:str, user_id:int,votes:str ):
+    with connection.cursor() as cursor:
+        sql = "INSERT INTO `pie`(`name`,`filling`,`crust`,`votes`,`user_id`) VALUES (%s,%s,%s,%s,%s)"
+        cursor.execute(sql, (name, filling, crust, votes,user_id))
+        connection.commit()
     
+def getAllUserPie(user_id:int):
+    with connection.cursor() as cursor:
+        sql = "SELECT `id`, `name`, `filling`, `crust`, `votes` FROM `pie` WHERE `user_id`=%s"
+        cursor.execute(sql, (user_id,))
+        result = cursor.fetchall()
+        return result
+ 
+def editPie(pie_id:int, name:str, filling:str, crust:str):
+    with connection.cursor() as cursor:
+        sql = "UPDATE `pie` SET `name`=%s, `filling`=%s, `crust`=%s WHERE `id`=%s"
+        cursor.execute(sql, (name, filling, crust, pie_id))
+        connection.commit()
+ 
+def deletePie(pie_id:int):
+    with connection.cursor() as cursor:
+        sql = "DELETE FROM `pie` WHERE `id`=%s"
+        cursor.execute(sql, (pie_id,))
+        connection.commit()
+ 
+def votePie(pie_id:int):
+    with connection.cursor() as cursor:
+        sql = "UPDATE `pie` SET `votes`=`votes`+1 WHERE `id`=%s"
+        cursor.execute(sql, (pie_id,))
+        connection.commit()
+
+def getPieById( id:int ):
+    
+    with connection.cursor() as cursor:
+    # Read a single record
+        sql = "SELECT `id`, `name`,`filling`, `crust` FROM `pie` WHERE `id`=%s"
+        cursor.execute(sql, (id))
+        result = cursor.fetchone()
+        connection.commit()
+        print(result)
+        return result
