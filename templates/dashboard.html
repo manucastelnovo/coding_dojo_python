@@ -31,8 +31,14 @@
               <tr>
                 
                 <td><a href="{{ url_for('showPie', pie_id=item['id'])}}">{{item['name']}}</a></td>
-                <td>
-                  <a href="{{ url_for('editPiePage', pie_id=item['id'])}}">{{item['id']}}</a>
+                <td class="m-8">
+                  <div class="m-8">
+
+                    <a  class="m-5" href="{{ url_for('editPiePage', pie_id=item['id'])}}">editar    </a>
+                    <a href="{{ url_for('deletePiePage', pie_id=item['id'])}}">eliminar</a>
+
+                  </div>
+                  
                 </td>
               </tr>
             {% endfor %}
