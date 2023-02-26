@@ -21,17 +21,18 @@
          
          <table>
           <thead>
-            <tr>
-              <th>Name</th>
+            <tr >
+              <th class="mr-8">Name</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {% for item in all_user_pie %}
               <tr>
-                <td>{{ item['name'] }}</td>
+                
+                <td><a href="{{ url_for('showPie', pie_id=item['id'])}}">{{item['name']}}</a></td>
                 <td>
-                  <a href="">{{item['id']}}</a>
+                  <a href="{{ url_for('editPiePage', pie_id=item['id'])}}">{{item['id']}}</a>
                 </td>
               </tr>
             {% endfor %}

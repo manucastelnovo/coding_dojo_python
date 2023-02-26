@@ -36,7 +36,7 @@ class LoginForm(FlaskForm):
 
 class PypieForm(FlaskForm):
     name = StringField(validators=[InputRequired(),Length(min=3, max=20)])
-    filling = StringField(validators=[InputRequired(),Length(min=3, max=20)])
+    filling = StringField(validators=[InputRequired(),Length(min=3, max=45)])
     crust = StringField(validators=[InputRequired(),Length(min=3, max=20)])
     submit = SubmitField('Add Pie')
 
