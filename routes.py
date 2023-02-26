@@ -9,10 +9,15 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from models import User
 
 app = Flask(__name__)
+app.secret_key = 'super secret string'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'registerLogin'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(int(user_id))
 
 
 
@@ -37,17 +42,6 @@ class PypieForm(FlaskForm):
 
 
 
-
-
-
-
-@login_manager.request_loader
-def request_loader(email):
-    user = getUser(email)
-    return user
-
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -69,11 +63,12 @@ def registerLogin():
     
     if formLogin.validate_on_submit():
         user = getUser(formLogin.email.data)
-        print('soy el user',user)
+        
         if user['email'] == formLogin.email.data and user['password'] == formLogin.password.data:
-            print("logueado")
+            
             new_user=User(user['firstname'],user['lastname'],user['email'],user['password'],user['id'])
             login_user(new_user)
+            
             return redirect(url_for('dashboard'))
         return redirect(url_for('registerLogin'))
 
@@ -83,7 +78,7 @@ def registerLogin():
     return render_template('register_login.html',formRegister=formRegister,formLogin=formLogin)
 
 
-@app.route('/dashboard', methods=['GET','POST'])
+@app.route('/dashboard', methods=['GET','POST']) 
 @login_required
 def dashboard():
     form=PypieForm()

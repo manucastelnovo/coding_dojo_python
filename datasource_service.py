@@ -1,6 +1,5 @@
 import pymysql.cursors
 
-from models import User
 
 
 # Connect to the database
@@ -34,48 +33,47 @@ connection = pymysql.connect(host='localhost',
 
     # SELECT
 
-with connection:
 
-    def registerUser( email:str,firstname:str ,lastname:str ,password:str ):
-            with connection.cursor() as cursor:
-            
-                sql = "INSERT INTO `users`(`email`,`firstname`,`lastname`,`password`) VALUES (%s,%s,%s,%s)"
-                cursor.execute(sql, (email, firstname, lastname, password))
-                connection.commit()
-                
-        
+def registerUser( email:str,firstname:str ,lastname:str ,password:str ):
+    
+    with connection.cursor() as cursor:
+        sql = "INSERT INTO `users`(`email`,`firstname`,`lastname`,`password`) VALUES (%s,%s,%s,%s)"
+        cursor.execute(sql, (email, firstname, lastname, password))
+        connection.commit()
         
 
-    def getUser( email:str ):
-            with connection.cursor() as cursor:
-            # Read a single record
-                
-                sql = "SELECT `id`, `firstname`,`lastname`, `email`, `password` FROM `users` WHERE `email`=%s"
-                cursor.execute(sql, (email))
-                result = cursor.fetchone()
-                connection.commit()
-                print(result)
-                return result
-                
+
+
+def getUser( email:str ):
+    
+    with connection.cursor() as cursor:
+    # Read a single record
+        sql = "SELECT `id`, `firstname`,`lastname`, `email`, `password` FROM `users` WHERE `email`=%s"
+        cursor.execute(sql, (email))
+        result = cursor.fetchone()
+        connection.commit()
+        
+        return result
+        
+    
+
+def getUserById( id:int ):
+    
+    with connection.cursor() as cursor:
+    # Read a single record
+        sql = "SELECT `id`, `firstname`,`lastname`, `email`, `password` FROM `users` WHERE `id`=%s"
+        cursor.execute(sql, (id))
+        result = cursor.fetchone()
+        connection.commit()
+        print(result)
+        return result
         
 
-    def getUserById( id:int ):
-            with connection.cursor() as cursor:
-            # Read a single record
-                
-                sql = "SELECT `id`, `firstname`,`lastname`, `email`, `password` FROM `users` WHERE `id`=%s"
-                cursor.execute(sql, (id))
-                result = cursor.fetchone()
-                connection.commit()
-                print(result)
-                return result
-                
 
-
-    def registerPypie( name:str,filling:str ,crust:str, user_id:str,votes:str ):
-            with connection.cursor() as cursor:
-                
-                sql = "INSERT INTO `users`(`name`,`filling`,`crust`,`votes`) VALUES (%s,%s,%s,%s)"
-                cursor.execute(sql, (name, filling, crust, votes))
-                connection.commit()
-        
+# def registerPypie( name:str,filling:str ,crust:str, user_id:str,votes:str ):
+#     
+#         with connection.cursor() as cursor:
+#             sql = "INSERT INTO `users`(`name`,`filling`,`crust`,`votes`) VALUES (%s,%s,%s,%s)"
+#             cursor.execute(sql, (name, filling, crust, votes))
+#             connection.commit()
+    
