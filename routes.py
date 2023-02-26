@@ -149,3 +149,9 @@ def deletePiePage(pie_id):
     all_user_pie= getAllUserPie(user_id)
     
     return render_template('dashboard.html',form=formPie,name=name,all_user_pie=all_user_pie)
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    logout_user()
+    return redirect(url_for('registerLogins'))
