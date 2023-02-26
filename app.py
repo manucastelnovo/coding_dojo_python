@@ -6,7 +6,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, cur
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# app.config['SQLALgCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 # app.config['SECRET_KEY'] = 'chupetess'
 # db = SQLAlchemy(app)
 
