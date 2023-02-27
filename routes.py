@@ -121,8 +121,9 @@ def pie():
 def editPiePage(pie_id):
     formEditPie= EditPieForm()
     name=current_user.firstname
-    if request == 'POST':
+    if formEditPie.validate_on_submit and request.method=='POST':
         editPie(pie_id,formEditPie.name.data,formEditPie.filling.data,formEditPie.crust.data)
+        return redirect(url_for('dashboard'))
     
     return render_template('edit_pie.html',form=formEditPie,name=name)
 
@@ -140,12 +141,12 @@ def showPie(pie_id):
 @login_required
 def deletePiePage(pie_id):
     deletePie(pie_id)
-    formPie=PypieForm()
-    name=current_user.firstname
-    user_id= current_user.id
-    all_user_pie= getAllUserPie(user_id)
+    # formPie=PypieForm()
+    # name=current_user.firstname
+    # user_id= current_user.id
+    # all_user_pie= getAllUserPie(user_id)
     
-    return render_template('dashboard.html',form=formPie,name=name,all_user_pie=all_user_pie)
+    return render_template('delete_pie.html')
 
 
 @app.route('/logout', methods=['GET'])
